@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Совет Гильдии — Гильдия Путников</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-council">
+    <div id="particles" class="particles-container"></div>
+    
+    <div class="container">
+        <header>
+            <h1>⚔️ Зал Совета Гильдий</h1>
+            <p class="subtitle">Прими участие в судьбе мира</p>
+        </header>
+
+        <main>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressBar" style="width: 0%"></div>
+            </div>
+
+            <div id="situationsContainer">
+                <!-- Ситуации будут загружены сюда -->
+            </div>
+
+            <div id="loadingIndicator" style="text-align: center; display: none; margin-top: 20px;">
+                <p style="color: #d4af37; font-size: 1.2em;">🔮 Оракул анализирует твой ответ...</p>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/quest.js"></script>
+    <script src="js/effects.js"></script>
+    <script>
+        // Золотая пыль в зале совета
+        new AdvancedParticleSystem('particles', {
+            count: 50,
+            type: 'sparkle',
+            color: 'rgba(212, 175, 55, 0.6)',
+            speed: 0.4,
+            size: 3
+        });
+        
+        // Тёплое свечение
+        setTimeout(() => {
+            const glowContainer = document.createElement('div');
+            glowContainer.id = 'glow-particles';
+            glowContainer.className = 'particles-container';
+            document.body.appendChild(glowContainer);
+            
+            new AdvancedParticleSystem('glow-particles', {
+                count: 30,
+                type: 'magic',
+                color: 'rgba(255, 200, 100, 0.4)',
+                speed: 0.3,
+                size: 5
+            });
+        }, 100);
+    </script>
+</body>
+</html>

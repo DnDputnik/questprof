@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Свиток Судьбы — Гильдия Путников</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .scroll-container {
+            background: linear-gradient(135deg, #f4e4c1 0%, #d4c4a1 100%);
+            color: #2c1810;
+            padding: 40px;
+            border-radius: 10px;
+            border: 3px solid #8b7355;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            font-family: 'Georgia', serif;
+        }
+        .scroll-container h1 {
+            color: #8b4513;
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+        }
+        .profile-type {
+            text-align: center;
+            font-size: 1.8em;
+            color: #8b4513;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(139, 69, 19, 0.1);
+            border-radius: 10px;
+            border: 2px solid #8b4513;
+        }
+        .scores-chart {
+            display: flex;
+            justify-content: space-around;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        .score-item {
+            text-align: center;
+            padding: 15px;
+            background: rgba(139, 69, 19, 0.1);
+            border-radius: 8px;
+            min-width: 100px;
+            margin: 5px;
+        }
+        .score-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #8b4513;
+        }
+        .score-label {
+            font-size: 0.9em;
+            color: #654321;
+        }
+        .recommendations h2 {
+            color: #8b4513;
+            border-bottom: 2px solid #8b4513;
+            padding-bottom: 10px;
+            margin-top: 25px;
+        }
+        .recommendations ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .recommendations li {
+            padding: 10px;
+            margin: 5px 0;
+            background: rgba(139, 69, 19, 0.05);
+            border-left: 4px solid #8b4513;
+            border-radius: 5px;
+        }
+        .save-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin-top: 30px;
+            background: linear-gradient(135deg, #8b4513 0%, #654321 100%);
+            color: #f4e4c1;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .save-btn:hover {
+            background: linear-gradient(135deg, #a0522d 0%, #8b4513 100%);
+        }
+        .save-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .success-message {
+            text-align: center;
+            padding: 20px;
+            background: rgba(76, 175, 80, 0.2);
+            border: 2px solid #4caf50;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+        }
+        .success-message.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-scroll">
+        <div id="particles" class="particles-container"></div>
+        <div class="container">
+            <header>
+                <h1> Свиток Судьбы</h1>
+                <p class="subtitle">Твой путь раскрыт, Путник</p>
+            </header>
+
+            <main>
+                <div class="scroll-container">
+                    <h1 id="heroTitle">Приветствую тебя, Герой!</h1>
+                    
+                    <div class="profile-type">
+                        <div>Твой профиль:</div>
+                        <div id="dominantType" style="font-size: 1.5em; margin-top: 10px;">—</div>
+                    </div>
+
+                    <div class="scores-chart" id="scoresChart"></div>
+
+                    <div class="recommendations">
+                        <h2>🎯 Подходящие профессии</h2>
+                        <ul id="professionsList"></ul>
+
+                        <h2> Рекомендуемые предметы ОГЭ/ЕГЭ</h2>
+                        <ul id="subjectsList"></ul>
+
+                        <h2>🏛️ ВУЗы России</h2>
+                        <ul id="universitiesList"></ul>
+                    </div>
+
+                    <button id="saveBtn" class="save-btn">💾 Сохранить результаты в Гильдии</button>
+                    
+                    <div id="successMessage" class="success-message">
+                        ✅ Результаты успешно сохранены! Учитель увидит их в таблице.
+                    </div>
+                </div>
+            </main>
+
+            <footer>
+                <p>Профориентационный квест в стиле D&D</p>
+                <p>© 2026 Гильдия Путников</p>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        const typeData = {
+            "Ч-П": {
+                name: "Человек-Природа",
+                professions: ["Эколог", "Биолог", "Агроном", "Лесник", "Ветеринар", "Геолог", "Ботаник"],
+                subjects: ["Биология", "Химия", "География", "Экология"],
+                universities: ["Тимирязевская академия", "МГУ (биологический факультет)", "РГАУ-МСХА", "СПбГУ (экология)"]
+            },
+            "Ч-Т": {
+                name: "Человек-Техника",
+                professions: ["Инженер", "Программист", "Механик", "Архитектор", "Робототехник", "Автомеханик", "Электронщик"],
+                subjects: ["Математика", "Физика", "Информатика", "Технология"],
+                universities: ["МГТУ им. Баумана", "МИФИ", "ИТМО", "СПбПУ", "НГТУ"]
+            },
+            "Ч-Х": {
+                name: "Человек-Художественный образ",
+                professions: ["Дизайнер", "Художник", "Писатель", "Музыкант", "Актер", "Режиссер", "Фотограф", "Архитектор"],
+                subjects: ["Литература", "История", "Обществознание", "Искусство"],
+                universities: ["Строгановка", "Репинская академия", "ГИТИС", "ВГИК", "МГУ (журналистика)"]
+            },
+            "Ч-Ч": {
+                name: "Человек-Человек",
+                professions: ["Учитель", "Врач", "Психолог", "Социальный работник", "Менеджер", "HR-специалист", "Юрист"],
+                subjects: ["Обществознание", "История", "Биология", "Русский язык"],
+                universities: ["МГУ (психология)", "МГППУ", "РГГУ", "СПбГУ (медицина)", "ВШЭ"]
+            },
+            "Ч-З": {
+                name: "Человек-Знаковая система",
+                professions: ["Программист", "Аналитик", "Бухгалтер", "Экономист", "Математик", "Лингвист", "Статистик"],
+                subjects: ["Математика", "Информатика", "Физика", "Английский язык"],
+                universities: ["МГУ (ВМК)", "ВШЭ", "МФТИ", "ИТМО", "СПбГУ (математика)"]
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const heroName = localStorage.getItem('questHeroName') || 'Путник';
+            const code = localStorage.getItem('questCode') || '—';
+            const className = localStorage.getItem('questClassName') || '—';
+            const dominantType = localStorage.getItem('dominantType') || 'Ч-П';
+            
+            let finalScores;
+            try {
+                finalScores = JSON.parse(localStorage.getItem('finalQuestScores'));
+            } catch {
+                finalScores = JSON.parse(localStorage.getItem('oracleScores')) || { "Ч-П": 0, "Ч-Т": 0, "Ч-Х": 0, "Ч-Ч": 0, "Ч-З": 0 };
+            }
+
+            document.getElementById('heroTitle').textContent = `Приветствую тебя, ${heroName}!`;
+
+            const typeInfo = typeData[dominantType];
+            document.getElementById('dominantType').textContent = `${typeInfo.name} (${dominantType})`;
+
+            const scoresChart = document.getElementById('scoresChart');
+            for (const [type, score] of Object.entries(finalScores)) {
+                const item = document.createElement('div');
+                item.className = 'score-item';
+                item.innerHTML = `<div class="score-value">${score}</div><div class="score-label">${type}</div>`;
+                scoresChart.appendChild(item);
+            }
+
+            const professionsList = document.getElementById('professionsList');
+            typeInfo.professions.forEach(prof => {
+                const li = document.createElement('li');
+                li.textContent = prof;
+                professionsList.appendChild(li);
+            });
+
+            const subjectsList = document.getElementById('subjectsList');
+            typeInfo.subjects.forEach(subj => {
+                const li = document.createElement('li');
+                li.textContent = subj;
+                subjectsList.appendChild(li);
+            });
+
+            const universitiesList = document.getElementById('universitiesList');
+            typeInfo.universities.forEach(uni => {
+                const li = document.createElement('li');
+                li.textContent = uni;
+                universitiesList.appendChild(li);
+            });
+
+            document.getElementById('saveBtn').addEventListener('click', async () => {
+                const btn = document.getElementById('saveBtn');
+                btn.disabled = true;
+                btn.textContent = '⏳ Сохранение...';
+
+                try {
+                    const response = await fetch('http://127.0.0.1:8000/api/save_result', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            code: code,
+                            hero_name: heroName,
+                            class_name: className,
+                            quest_type: dominantType,
+                            scores: {
+                                ...finalScores,
+                                date: new Date().toLocaleDateString('ru-RU')
+                            },
+                            choices: localStorage.getItem('questChoices') || '—'
+                        })
+                    });
+
+                    if (response.ok) {
+                        document.getElementById('successMessage').classList.add('show');
+                        btn.textContent = '✅ Сохранено!';
+                    } else {
+                        alert('Ошибка сохранения. Попробуй ещё раз.');
+                        btn.disabled = false;
+                        btn.textContent = '💾 Сохранить результаты в Гильдии';
+                    }
+                } catch (error) {
+                    console.error('Ошибка:', error);
+                    alert('Не удалось связаться с сервером.');
+                    btn.disabled = false;
+                    btn.textContent = '💾 Сохранить результаты в Гильдии';
+                }
+            });
+        });
+        // Динамическая смена фона в зависимости от типа профиля
+const dominantType = localStorage.getItem('dominantType') || 'Ч-П';
+const backgroundMap = {
+    'Ч-П': 'bg-forest',   // Зачарованный лес
+    'Ч-Т': 'bg-blacksmith', // Кузница
+    'Ч-Х': 'bg-artist',   // Мастерская художника
+    'Ч-Ч': 'bg-tavern',   // Таверна (общение с людьми)
+    'Ч-З': 'bg-library'   // Библиотека
+};
+
+// Меняем класс у body
+document.body.className = backgroundMap[dominantType] || 'bg-scroll';
+    </script>
+    
+</body>
+</html>

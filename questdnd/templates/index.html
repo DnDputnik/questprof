@@ -1,49 +1,76 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Гильдия Путников — Таверна «Путь Героя»</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-tavern">
+    <!-- Контейнер для частиц (пыль и искры в таверне) -->
+<div id="particles" class="particles-container"></div>
+    <div class="container">
+        <header>
+            <img src="images/guild-emblem.png" alt="Эмблема Гильдии" class="guild-logo">
+            <h1>Гильдия Исследователей</h1>
+            <p class="subtitle">Дворецкий приглашает тебя пройти в зал!</p>
+        </header>
 
-{% block title %}На ступенях Гильдии Исследователей{% endblock %}
+        <main>
+            <div class="registration-form">
+                <h2>Войди в зал, Путник</h2>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="code">Твой код доступа:</label>
+                        <input type="text" id="code" name="code" placeholder="Например: 8А02" required>
+                        <small>Код выдал учитель (формат: 8А01, 11Б15 и т.д.)</small>
+                    </div>
 
-{% block content %}
-<div class="hero-section">
-    <div class="card registration-card">
-        <h1>🏰 На ступенях Гильдии Исследователей</h1>
-        <p class="subtitle">Введи свой код доступа и имя героя, чтобы начать путь</p>
-        
-        <form action="/register" method="POST" class="quest-form">
-            <div class="form-group">
-                <label for="code">Код доступа (например: 9А14, 11Б05)</label>
-                <input type="text" id="code" name="code" placeholder="9А14" required maxlength="5" pattern="[0-9А-Яа-яA-Za-z]{3,5}" title="Формат: номер класса + буква + номер по журналу">
+                    <div class="form-group">
+                        <label for="heroName">Имя твоего героя:</label>
+                        <input type="text" id="heroName" name="heroName" placeholder="Как тебя зовут в этом мире?" required>
+                    </div>
+
+                    <button type="submit" class="btn-primary">🗝️ Войти в зал </button>
+                </form>
+                <div id="errorMessage" class="error-message"></div>
             </div>
-            
-            <div class="form-group">
-                <label for="class_grade">Класс</label>
-                <input type="text" id="class_grade" name="class_grade" placeholder="9 А" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="hero_name">Имя твоего героя</label>
-                <input type="text" id="hero_name" name="hero_name" placeholder="Арагорн, Геральт, Эльфина..." required maxlength="20">
-            </div>
-            
-            <button type="submit" class="btn btn-primary">⚔️ Войти в Гильдию</button>
-        </form>
-        
-        <div class="lore-text">
-            <p><em>«Только достойные смогут пройти испытания Оракула и узнать свою судьбу...»</em></p>
-        </div>
+        </main>
+
+        <footer>
+            <p>Профориентационный квест в стиле D&D</p>
+            <p>© 2026 Гильдия Путников</p>
+        </footer>
     </div>
-</div>
 
-<style>
-.hero-section{display:flex;justify-content:center;align-items:center;min-height:70vh;padding:20px}
-.registration-card{background:rgba(255,255,255,.95);border-radius:15px;padding:40px;max-width:500px;width:100%;box-shadow:0 10px 30px rgba(0,0,0,.3);border:2px solid #d4af37}
-.registration-card h1{color:#1a1a2e;text-align:center;margin-bottom:10px;font-size:1.6rem}
-.subtitle{text-align:center;color:#666;margin-bottom:30px}
-.quest-form .form-group{margin-bottom:20px}
-.quest-form label{display:block;margin-bottom:8px;color:#333;font-weight:bold}
-.quest-form input{width:100%;padding:12px;border:2px solid #ddd;border-radius:8px;font-size:16px}
-.quest-form input:focus{border-color:#d4af37;outline:none}
-.btn-primary{width:100%;padding:15px;background:linear-gradient(45deg,#d4af37,#f4e4a6);color:#1a1a2e;border:none;border-radius:8px;font-size:18px;font-weight:bold;cursor:pointer;transition:transform .2s}
-.btn-primary:hover{transform:translateY(-2px)}
-.lore-text{margin-top:25px;text-align:center;font-style:italic;color:#555;border-top:1px solid #ddd;padding-top:15px}
-</style>
-{% endblock %}
+    <script src="js/main.js"></script>
+    <script src="js/effects.js"></script>
+<script>
+    // Тёплые искры от камина
+    new AdvancedParticleSystem('particles', {
+        count: 60,
+        type: 'ember',
+        color: 'rgba(255, 180, 80, 0.8)',
+        speed: 1.5,
+        size: 4
+    });
+    
+    // Дополнительный слой - золотая пыль
+    setTimeout(() => {
+        const dustContainer = document.createElement('div');
+        dustContainer.id = 'dust-particles';
+        dustContainer.className = 'particles-container';
+        dustContainer.style.zIndex = '0';
+        document.body.appendChild(dustContainer);
+        
+        new AdvancedParticleSystem('dust-particles', {
+            count: 30,
+            type: 'sparkle',
+            color: 'rgba(212, 175, 55, 0.4)',
+            speed: 0.3,
+            size: 2
+        });
+    }, 100);
+</script>
+</body>
+</html>

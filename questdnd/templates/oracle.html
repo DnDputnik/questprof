@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Оракул — Гильдия Путников</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Эффект хрустального шара */
+        .crystal-orb {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, 
+                rgba(255, 255, 255, 0.3) 0%, 
+                rgba(100, 150, 255, 0.2) 30%, 
+                rgba(50, 100, 200, 0.1) 60%, 
+                transparent 100%);
+            box-shadow: 
+                0 0 60px rgba(100, 150, 255, 0.4),
+                0 0 120px rgba(100, 150, 255, 0.2),
+                inset 0 0 60px rgba(255, 255, 255, 0.1);
+            pointer-events: none;
+            opacity: 0;
+            z-index: 0;
+            animation: orbPulse 4s ease-in-out infinite;
+        }
+        
+        @keyframes orbPulse {
+            0%, 100% {
+                box-shadow: 
+                    0 0 60px rgba(100, 150, 255, 0.4),
+                    0 0 120px rgba(100, 150, 255, 0.2),
+                    inset 0 0 60px rgba(255, 255, 255, 0.1);
+            }
+            50% {
+                box-shadow: 
+                    0 0 80px rgba(100, 150, 255, 0.6),
+                    0 0 160px rgba(100, 150, 255, 0.3),
+                    inset 0 0 80px rgba(255, 255, 255, 0.2);
+            }
+        }
+        
+        /* Прогресс-бар Оракула */
+        .oracle-progress {
+            background: rgba(0, 0, 0, 0.5);
+            height: 8px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            border: 1px solid #d4af37;
+        }
+        
+        .oracle-progress-fill {
+            background: linear-gradient(90deg, #6496ff, #a0c4ff);
+            height: 100%;
+            transition: width 0.5s ease;
+            box-shadow: 0 0 10px rgba(100, 150, 255, 0.6);
+        }
+        
+        .question-counter {
+            text-align: center;
+            color: #d4af37;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+        
+        /* Вопросы Оракула */
+        .question-block {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid #6496ff;
+            box-shadow: 0 0 30px rgba(100, 150, 255, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .question-block h3 {
+            color: #a0c4ff;
+            margin-bottom: 25px;
+            font-size: 1.4em;
+            line-height: 1.5;
+            text-shadow: 0 0 10px rgba(100, 150, 255, 0.5);
+        }
+        
+        .option-label {
+            display: block;
+            padding: 15px;
+            margin: 12px 0;
+            background: rgba(100, 150, 255, 0.1);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(100, 150, 255, 0.3);
+            color: #f5f5f5;
+            font-size: 1.05em;
+        }
+        
+        .option-label:hover {
+            background: rgba(100, 150, 255, 0.25);
+            border-color: #6496ff;
+            transform: translateX(8px);
+            box-shadow: 0 0 15px rgba(100, 150, 255, 0.4);
+        }
+        
+        .option-label input {
+            margin-right: 12px;
+            cursor: pointer;
+            accent-color: #6496ff;
+        }
+        
+        /* Финальное сообщение Оракула */
+        .oracle-final {
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            border: 2px solid #d4af37;
+            box-shadow: 0 0 40px rgba(212, 175, 55, 0.4);
+        }
+        
+        .crystal-glow {
+            animation: crystalFloat 3s ease-in-out infinite;
+            display: inline-block;
+        }
+        
+        @keyframes crystalFloat {
+            0%, 100% {
+                transform: translateY(0);
+                filter: drop-shadow(0 0 20px rgba(100, 150, 255, 0.6));
+            }
+            50% {
+                transform: translateY(-10px);
+                filter: drop-shadow(0 0 30px rgba(100, 150, 255, 0.8));
+            }
+        }
+    </style>
+</head>
+<body class="bg-oracle">
+    <div id="particles" class="particles-container"></div>
+    <!-- Эффект хрустального шара на фоне -->
+    <div class="crystal-orb"></div>
+    
+    <div class="container">
+        <header>
+            <h1>🔮 Комната Оракула</h1>
+            <p class="subtitle">Загляни в кристалл — он увидит твою истинную суть</p>
+        </header>
+
+        <main>
+            <div class="registration-form" style="background: rgba(0, 0, 0, 0.5);">
+                <div class="question-counter" id="questionCounter">Вопрос 1 из 5</div>
+                <div class="oracle-progress">
+                    <div class="oracle-progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+                <div id="questionsContainer">
+                    <!-- Вопросы появятся здесь -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/oracle.js"></script>
+    <script src="js/effects.js"></script>
+<script>
+    // Мистические частицы вокруг шара
+    new AdvancedParticleSystem('particles', {
+        count: 80,
+        type: 'sparkle',
+        color: 'rgba(150, 200, 255, 0.9)',
+        speed: 0.6,
+        size: 3
+    });
+    
+    // Магическая аура
+    setTimeout(() => {
+        const auraContainer = document.createElement('div');
+        auraContainer.id = 'aura-particles';
+        auraContainer.className = 'particles-container';
+        document.body.appendChild(auraContainer);
+        
+        new AdvancedParticleSystem('aura-particles', {
+            count: 50,
+            type: 'magic',
+            color: 'rgba(180, 130, 255, 0.5)',
+            speed: 0.4,
+            size: 4
+        });
+    }, 100);
+</script>
+</body>
+</html>

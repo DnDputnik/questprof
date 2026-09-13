@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Зал Распределения — Гильдия Путников</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-elf">
+    <div id="particles" class="particles-container"></div>
+    <div class="container">
+        <header>
+            <h1>Зал Распределения Гильдий</h1>
+            <p class="subtitle" id="welcomeText">Добро пожаловать, Путник! Пять путей лежат перед тобой</p>
+        </header>
+
+        <main>
+            <div class="registration-form">
+                <p style="text-align: center; font-size: 1.1em; margin-bottom: 25px; line-height: 1.6;">
+                    Ты стоишь в древнем зале, где столетия назад Великий Оракул впервые определил предназначение путников.
+                </p>
+                
+                <p style="text-align: center; font-size: 1.1em; margin-bottom: 20px; color: #d4af37; font-weight: bold;">
+                    Вокруг хрустального шара парят символы пяти гильдий:
+                </p>
+
+                <div style="text-align: left; max-width: 500px; margin: 0 auto 30px; font-size: 1.05em; line-height: 1.8;">
+                    <div>🌿 <strong>Природа</strong> — для тех, кто слышит шёпот деревьев</div>
+                    <div>⚙️ <strong>Техника</strong> — для создателей и изобретателей</div>
+                    <div>🎨 <strong>Искусство</strong> — для творцов и вдохновителей</div>
+                    <div>🤝 <strong>Люди</strong> — для целителей и наставников</div>
+                    <div>📚 <strong>Знания</strong> — для мудрецов и исследователей</div>
+                </div>
+
+                <p style="text-align: center; font-size: 1.1em; margin-bottom: 30px; font-style: italic; color: #d4af37;">
+                    «Твой путь ещё не ясен, но кристалл уже чувствует твою суть. 
+                    Пройди испытание Оракула — и гильдии откроют перед тобой свои врата.»
+                </p>
+
+                <div style="text-align: center;">
+                    <a href="oracle.html" class="btn-primary" style="text-decoration: none; display: inline-block; max-width: 400px;">
+                        🔮 Принять вызов Оракула
+                    </a>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Профориентационный квест в стиле D&D</p>
+            <p>© 2026 Гильдия Путников</p>
+        </footer>
+    </div>
+
+    <script>
+        // Подставляем имя героя из localStorage
+        document.addEventListener('DOMContentLoaded', () => {
+            const heroName = localStorage.getItem('questHeroName') || 'Путник';
+            document.getElementById('welcomeText').textContent = `Добро пожаловать, ${heroName}! Пять путей лежат перед тобой`;
+        });
+    </script>
+    <script src="js/effects.js"></script>
+<script>
+    // Магические частицы
+    new AdvancedParticleSystem('particles', {
+        count: 70,
+        type: 'magic',
+        color: 'rgba(100, 180, 255, 0.7)',
+        speed: 0.8,
+        size: 3
+    });
+    
+    // Дополнительные мерцающие звёзды
+    setTimeout(() => {
+        const starsContainer = document.createElement('div');
+        starsContainer.id = 'stars-particles';
+        starsContainer.className = 'particles-container';
+        document.body.appendChild(starsContainer);
+        
+        new AdvancedParticleSystem('stars-particles', {
+            count: 40,
+            type: 'sparkle',
+            color: 'rgba(255, 255, 255, 0.6)',
+            speed: 0.2,
+            size: 2
+        });
+    }, 100);
+</script>
+</body>
+</html>
