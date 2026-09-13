@@ -1,0 +1,203 @@
+{% extends "base.html" %}
+
+{% block title %}Комната Оракула{% endblock %}
+
+{% block content %}
+<div class="oracle-section">
+    <div class="card oracle-card">
+        <h1>🔮 Комната Оракула</h1>
+        <p class="intro-text">Прежде чем отправиться в путь, ты должен узнать свою истинную природу. Ответь на 6 вопросов древнего Оракула, и он укажет тебе направление судьбы.</p>
+        
+        <form action="/oracle" method="POST" class="quest-form">
+            <!-- Вопрос 1 -->
+            <div class="question-block">
+                <h3>1. Что тебя больше завораживает?</h3>
+                <div class="options">
+                    <label class="option-card">
+                        <input type="radio" name="q1" value="0" required>
+                        <span class="option-text">🌿 Живой лес, где каждый шорох полон жизни</span>
+                    </label>
+                    <label class="option-card">
+                        <input type="radio" name="q1" value="1" required>
+                        <span class="option-text">⚙️ Древний механизм с движущимися шестернями</span>
+                    </label>
+                </div>
+            </div>
+            
+            <!-- Вопрос 2 -->
+            <div class="question-block">
+                <h3>2. Как ты предпочтешь провести вечер?</h3>
+                <div class="options">
+                    <label class="option-card">
+                        <input type="radio" name="q2" value="0" required>
+                        <span class="option-text">🎭 Создать что-то прекрасное: рисунок, музыку, историю</span>
+                    </label>
+                    <label class="option-card">
+                        <input type="radio" name="q2" value="1" required>
+                        <span class="option-text">👥 Помочь другу решить проблему или просто поболтать</span>
+                    </label>
+                </div>
+            </div>
+            
+            <!-- Вопрос 3 -->
+            <div class="question-block">
+                <h3>3. Какая магия тебе ближе?</h3>
+                <div class="options">
+                    <label class="option-card">
+                        <input type="radio" name="q3" value="0" required>
+                        <span class="option-text">🔢 Магия чисел и зашифрованных посланий</span>
+                    </label>
+                    <label class="option-card">
+                        <input type="radio" name="q3" value="1" required>
+                        <span class="option-text">🌺 Магия роста растений и лечения ран</span>
+                    </label>
+                </div>
+            </div>
+            
+            <!-- Вопрос 4 -->
+            <div class="question-block">
+                <h3>4. Что бы ты выбрал в подарок?</h3>
+                <div class="options">
+                    <label class="option-card">
+                        <input type="radio" name="q4" value="0" required>
+                        <span class="option-text">🛠️ Набор инструментов для создания устройств</span>
+                    </label>
+                    <label class="option-card">
+                        <input type="radio" name="q4" value="1" required>
+                        <span class="option-text">🎨 Холст, краски и кисти мастера</span>
+                    </label>
+                </div>
+            </div>
+            
+            <!-- Вопрос 5 -->
+            <div class="question-block">
+                <h3>5. Твоя роль в группе приключенцев?</h3>
+                <div class="options">
+                    <label class="option-card">
+                        <input type="radio" name="q5" value="0" required>
+                        <span class="option-text">🤝 Миротворец, который гасит конфликты</span>
+                    </label>
+                    <label class="option-card">
+                        <input type="radio" name="q5" value="1" required>
+                        <span class="option-text">📜 Хранитель карт и древних записей</span>
+                    </label>
+                </div>
+            </div>
+            
+            <!-- Вопрос 6 -->
+            <div class="question-block">
+                <h3>6. Какое занятие кажется тебе самым полезным?</h3>
+                <div class="options">
+                    <label class="option-card">
+                        <input type="radio" name="q6" value="0" required>
+                        <span class="option-text">🏗️ Построить мост через опасную пропасть</span>
+                    </label>
+                    <label class="option-card">
+                        <input type="radio" name="q6" value="1" required>
+                        <span class="option-text">🐾 Вылечить раненого зверя</span>
+                    </label>
+                </div>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">✨ Узнать свою судьбу</button>
+        </form>
+    </div>
+</div>
+
+<style>
+.oracle-section {
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #4a1c40 100%);
+    min-height: 100vh;
+}
+
+.oracle-card {
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: 15px;
+    padding: 40px;
+    max-width: 700px;
+    width: 100%;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+    border: 2px solid #d4af37;
+}
+
+.oracle-card h1 {
+    text-align: center;
+    color: #4a1c40;
+    margin-bottom: 15px;
+}
+
+.intro-text {
+    text-align: center;
+    color: #555;
+    margin-bottom: 30px;
+    font-style: italic;
+}
+
+.question-block {
+    margin-bottom: 25px;
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    border-left: 4px solid #d4af37;
+}
+
+.question-block h3 {
+    color: #333;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+}
+
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.option-card {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    background: white;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.option-card:hover {
+    border-color: #d4af37;
+    background: #fffef0;
+}
+
+.option-card input[type="radio"] {
+    margin-right: 12px;
+    transform: scale(1.2);
+}
+
+.option-text {
+    font-size: 1rem;
+    color: #333;
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 15px;
+    margin-top: 20px;
+    background: linear-gradient(45deg, #d4af37, #f4e4a6);
+    color: #1a1a2e;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+}
+</style>
+{% endblock %}

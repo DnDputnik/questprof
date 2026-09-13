@@ -1,0 +1,235 @@
+{% extends "base.html" %}
+
+{% block title %}Свиток Судьбы{% endblock %}
+
+{% block content %}
+<div class="scroll-section">
+    <div class="scroll-container">
+        <div class="scroll-paper">
+            <div class="scroll-header">
+                <h1>📜 Свиток Судьбы</h1>
+                <p class="subtitle">Откровение Оракула для героя</p>
+            </div>
+            
+            <div class="hero-name-display">
+                <h2>{{ data.hero_name }}</h2>
+                <p class="archetype-title">{{ data.class_archetype }}</p>
+            </div>
+            
+            <div class="scroll-body">
+                <div class="info-block">
+                    <h3>🏛️ Твой тип личности</h3>
+                    <p><strong>{{ data.type_name }}</strong></p>
+                    <p class="desc-text">{{ data.desc }}</p>
+                </div>
+                
+                <div class="info-block">
+                    <h3>⚔️ Подходящие профессии</h3>
+                    <ul class="profession-list">
+                        {% for prof in data.professions %}
+                        <li>{{ prof }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                
+                <div class="info-block">
+                    <h3>📚 Необходимые испытания (ЕГЭ/ОГЭ)</h3>
+                    <p class="exams-text">{{ data.exams }}</p>
+                </div>
+                
+                <div class="info-block">
+                    <h3>🏫 Вузы России</h3>
+                    <ul class="uni-list">
+                        {% for uni in data.universities %}
+                        <li>{{ uni }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="scroll-footer">
+                <p><em>«Пусть этот путь приведет тебя к славе и предназначению!»</em></p>
+                <p class="seal">🔮 Гильдия Исследователей</p>
+            </div>
+        </div>
+        
+        <div class="actions">
+            <button onclick="window.print()" class="btn btn-secondary">🖨️ Распечатать свиток</button>
+            <a href="/reset" class="btn btn-primary">🏠 Вернуться в Гильдию</a>
+        </div>
+    </div>
+</div>
+
+<style>
+.scroll-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #4a1c40 100%);
+    min-height: 100vh;
+}
+
+.scroll-container {
+    max-width: 700px;
+    width: 100%;
+}
+
+.scroll-paper {
+    background: #f9f4e6;
+    border-radius: 5px;
+    padding: 40px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    border: 3px solid #8b4513;
+    position: relative;
+    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23d4af37' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+.scroll-header {
+    text-align: center;
+    border-bottom: 2px solid #8b4513;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.scroll-header h1 {
+    color: #8b4513;
+    font-size: 2rem;
+    margin: 0;
+    font-family: 'Georgia', serif;
+}
+
+.subtitle {
+    color: #666;
+    font-style: italic;
+    margin-top: 5px;
+}
+
+.hero-name-display {
+    text-align: center;
+    margin: 25px 0;
+    padding: 20px;
+    background: rgba(212, 175, 55, 0.1);
+    border-radius: 8px;
+}
+
+.hero-name-display h2 {
+    color: #5d4037;
+    font-size: 1.8rem;
+    margin: 0;
+}
+
+.archetype-title {
+    color: #8b4513;
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-top: 5px;
+}
+
+.scroll-body {
+    margin-top: 20px;
+}
+
+.info-block {
+    margin-bottom: 25px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 8px;
+    border-left: 4px solid #d4af37;
+}
+
+.info-block h3 {
+    color: #5d4037;
+    margin-top: 0;
+    font-size: 1.1rem;
+}
+
+.profession-list, .uni-list {
+    margin: 10px 0;
+    padding-left: 20px;
+}
+
+.profession-list li, .uni-list li {
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.exams-text {
+    font-weight: bold;
+    color: #8b4513;
+}
+
+.desc-text {
+    font-style: italic;
+    color: #555;
+    line-height: 1.6;
+}
+
+.scroll-footer {
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 2px dashed #8b4513;
+}
+
+.scroll-footer p {
+    margin: 10px 0;
+    color: #666;
+}
+
+.seal {
+    font-weight: bold;
+    color: #8b4513;
+    font-size: 1.1rem;
+}
+
+.actions {
+    margin-top: 25px;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, #d4af37, #f4e4a6);
+    color: #1a1a2e;
+    border: none;
+}
+
+.btn-secondary {
+    background: #f0f0f0;
+    color: #333;
+    border: 2px solid #ccc;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+@media print {
+    .scroll-section {
+        background: white;
+        padding: 0;
+    }
+    .scroll-paper {
+        box-shadow: none;
+        border: 2px solid #8b4513;
+    }
+    .actions {
+        display: none;
+    }
+}
+</style>
+{% endblock %}

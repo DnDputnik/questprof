@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block title %}Испытание Героя{% endblock %}
+
+{% block content %}
+<div class="quest-section">
+    <div class="card quest-card">
+        <h1>⚔️ Твой Путь Героя</h1>
+        <p class="hero-greeting">Приветствуем, <strong>{{ hero }}</strong>!</p>
+        
+        <div class="archetype-block">
+            <h2>🏛️ Твой архетип: {{ event.class }}</h2>
+            <p class="archetype-desc">{{ event.desc }}</p>
+        </div>
+        
+        <div class="story-block">
+            <h3>📜 Ситуация из Легенды...</h3>
+            <p class="story-text">{{ event.event_text }}</p>
+            
+            <div class="reflection-zone">
+                <p><em>Подумай, какой выбор ты бы сделал в этой ситуации? Твой ответ раскрывает твою истинную природу.</em></p>
+            </div>
+        </div>
+        
+        <form action="/finish_quest" method="POST">
+            <button type="submit" class="btn btn-primary">📜 Получить Свиток Судьбы</button>
+        </form>
+    </div>
+</div>
+
+<style>
+.quest-section {
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #2c1810 0%, #5d4037 100%);
+    min-height: 100vh;
+}
+
+.quest-card {
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: 15px;
+    padding: 40px;
+    max-width: 700px;
+    width: 100%;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+    border: 2px solid #d4af37;
+}
+
+.quest-card h1 {
+    text-align: center;
+    color: #5d4037;
+    margin-bottom: 10px;
+}
+
+.hero-greeting {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 25px;
+}
+
+.archetype-block {
+    background: linear-gradient(135deg, #f9f9f9, #fff);
+    padding: 20px;
+    border-radius: 10px;
+    border-left: 5px solid #d4af37;
+    margin-bottom: 25px;
+}
+
+.archetype-block h2 {
+    color: #8b4513;
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+}
+
+.archetype-desc {
+    font-style: italic;
+    color: #555;
+    line-height: 1.6;
+}
+
+.story-block {
+    margin: 25px 0;
+}
+
+.story-block h3 {
+    color: #5d4037;
+    margin-bottom: 15px;
+}
+
+.story-text {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #333;
+    background: #fffef0;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #d4af37;
+}
+
+.reflection-zone {
+    margin-top: 20px;
+    padding: 15px;
+    background: #f0f4f8;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 15px;
+    margin-top: 20px;
+    background: linear-gradient(45deg, #d4af37, #f4e4a6);
+    color: #2c1810;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+}
+</style>
+{% endblock %}
