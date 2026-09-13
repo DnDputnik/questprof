@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}Комната Распределения{% endblock %}
+
+{% block content %}
+<div class="container distribution-section">
+    <div class="card">
+        <h1>🗺️ Комната Распределения</h1>
+        <p class="welcome-text">Приветствуем, <strong>{{ hero_name }}</strong>!</p>
+        
+        <div class="lore-block">
+            <p>Ты вступи́л в древние чертоги Гильдии. Но прежде чем отправиться на поиски своего предназначения, необходимо узнать свою судьбу.</p>
+            <p>Легенды гласят: только Оракул может увидеть истинную сущность героя и указать путь, который приведет к славе.</p>
+        </div>
+        
+        <div class="action-block">
+            <p><em>«Судьба ждет того, кто осмелится взглянуть ей в глаза...»</em></p>
+            <a href="/oracle" class="btn btn-primary">🔮 Посетить Оракула</a>
+        </div>
+    </div>
+</div>
+
+<style>
+.distribution-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    background: linear-gradient(135deg, #2c3e50 0%, #4ca1af 100%);
+    padding: 20px;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    padding: 40px;
+    max-width: 600px;
+    width: 100%;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    border: 2px solid #d4af37;
+    text-align: center;
+}
+
+.card h1 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+.welcome-text {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 25px;
+}
+
+.lore-block {
+    background: #f9f9f9;
+    padding: 20px;
+    border-left: 4px solid #d4af37;
+    margin: 20px 0;
+    text-align: left;
+    line-height: 1.6;
+}
+
+.action-block {
+    margin-top: 30px;
+}
+
+.btn-primary {
+    display: inline-block;
+    padding: 15px 30px;
+    background: linear-gradient(45deg, #d4af37, #f4e4a6);
+    color: #2c3e50;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    transition: transform 0.2s;
+    margin-top: 15px;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+}
+</style>
+{% endblock %}
